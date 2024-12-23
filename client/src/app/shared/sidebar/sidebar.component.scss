@@ -1,0 +1,23 @@
+.sidebar {
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .sidebar.translate-x-0 {
+    transform: translateX(0);
+  }
+  
+  .sidebar.-translate-x-full {
+    transform: translateX(-100%);
+  }
+  
+  button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  button img {
+    transition: transform 0.3s ease-in-out;
+  }
+  

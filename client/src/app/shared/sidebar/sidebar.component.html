@@ -1,0 +1,30 @@
+<!-- Botão para abrir/fechar a Sidebar em telas pequenas -->
+<div class="fixed top-1/2 left-0 transform -translate-y-1/2 md:hidden z-50">
+    <button class="bg-gray-700 text-white rounded-full p-3" (click)="toggleSidebar()" aria-label="Toggle Sidebar">
+        <img src="right-arrow.svg" alt="Toggle Sidebar" class="w-6 h-6">
+    </button>
+</div>
+
+<!-- Sidebar -->
+<div class="sidebar bg-slate-100 fixed top-0 left-0 h-full w-16 md:w-24 p-4 flex flex-col items-center md:items-start z-50 shadow-lg rounded-br-3xl rounded-tr-3xl transition-transform duration-300"
+    [ngClass]="{'translate-x-0': isSidebarVisible, '-translate-x-full': !isSidebarVisible}">
+
+    <!-- Botão para abrir/fechar a Sidebar -->
+    <div class="absolute top-1/2 left-0 transform -translate-y-1/2 z-50">
+        <button class="bg-gray-700 text-white rounded-full p-3" (click)="toggleSidebar()" aria-label="Toggle Sidebar">
+            <img [src]="isSidebarVisible ? 'left-arrow.svg' : 'right-arrow.svg'" alt="Toggle Sidebar" class="w-6 h-6">
+        </button>
+    </div>
+
+    <!-- User Icon -->
+    <div
+        class="user-icon bg-slate-200 hover:bg-slate-300 rounded-full w-12 h-12 md:w-16 md:h-16 mb-6 flex items-center justify-center transition-all duration-300">
+        <img src="user.svg" alt="User Icon" class="rounded-full w-10 h-10 md:w-14 md:h-14">
+    </div>
+
+    <!-- Settings Icon -->
+    <div
+        class="settings-icon mt-auto flex items-center justify-center hover:bg-slate-300 rounded-full p-2 transition-all duration-300">
+        <img src="settings.svg" alt="Settings Icon" class="w-8 h-8 md:w-8 md:h-8">
+    </div>
+</div>
