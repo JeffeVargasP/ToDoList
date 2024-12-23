@@ -1,0 +1,60 @@
+.filter-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+  }
+  
+  .filter-button {
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 50px;
+    padding: 0.5rem 1rem;
+    margin: 0 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .filter-button:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .filter-button.active {
+    background-color: #007bff;
+    color: #ffffff;
+  }
+  
+  .task-list {
+    display: flex;
+    justify-content: center;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .task-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .task-checkbox {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  
+  .task-label {
+    flex-grow: 1;
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  .no-tasks {
+    text-align: center;
+    color: #666;
+    font-size: 1.2rem;
+  }
+  

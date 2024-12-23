@@ -1,8 +1,12 @@
-<div class="flex bg-white p-3 rounded-full drop-shadow-lg w-full md:w-1/4">
-    <input class="outline-none font-medium placeholder-gray-400 text-gray-800 text-sm sm:text-base w-full" type="text"
-        placeholder="Add a new task..." aria-label="Add a new task">
-    <button
-        class="bg-gray-700 text-white font-medium px-4 py-2 sm:px-6 sm:py-3 rounded-full hover:bg-gray-800 transition-all text-sm sm:text-base">
-        ADD
-    </button>
-</div>
+<form [formGroup]="addTask" (ngSubmit)="createTask()">
+    <div class="flex bg-white p-3 rounded-full drop-shadow-lg">
+        <input formControlName="description"
+            class="outline-none font-medium placeholder-gray-400 text-gray-800 text-sm sm:text-base w-full" type="text"
+            placeholder="Add a new task..." aria-label="Add a new task" />
+        <button type="submit"
+            class="bg-gray-700 text-white font-medium px-4 py-2 sm:px-6 sm:py-3 rounded-full hover:bg-gray-800 transition-all text-sm sm:text-base"
+            [disabled]="addTask.invalid">
+            ADD
+        </button>
+    </div>
+</form>

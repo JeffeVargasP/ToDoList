@@ -1,14 +1,26 @@
-<div class="flex p-3 w-full">
-    <ol class="list-decimal list-inside w-full space-y-2">
-        <li class="flex items-center gap-3 hover:bg-blue-200 p-2 rounded-md transition-colors">
-            <input type="checkbox" id="checkbox1" class="form-checkbox h-6 w-6 text-green-600 rounded-full bg-transparent appearance-none border-2 border-slate-600 checked:bg-green-500 focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition-all duration-200 ease-in-out relative">
-            <label for="checkbox1" class="checkbox-label"></label>
-            <p class="text-gray-800 font-medium text-lg">Task 1</p>
-        </li>
-        <li class="flex items-center gap-3 hover:bg-blue-200 p-2 rounded-md transition-colors">
-            <input type="checkbox" id="checkbox1" class="form-checkbox h-6 w-6 text-green-600 rounded-full bg-transparent appearance-none border-2 border-slate-600 checked:bg-green-500 focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 transition-all duration-200 ease-in-out relative">
-            <label for="checkbox1" class="checkbox-label"></label>
-            <p class="text-gray-800 font-medium text-lg">Task 1</p>
-        </li>
-    </ol>
+<div class="filter-container">
+  <button class="filter-button" [ngClass]="{ active: selectedFilter === 'todas' }" (click)="filterTasks('todas')">
+    All
+  </button>
+  <button class="filter-button" [ngClass]="{ active: selectedFilter === 'concluidas' }"
+    (click)="filterTasks('concluidas')">
+    Done
+  </button>
+</div>
+
+<div class="task-list-container">
+  <div class="task-list flex flex-col">
+    <ul>
+      <li *ngFor="let task of filteredTasks" class="task-item">
+        <input type="checkbox" [id]="'checkbox' + task.id" [checked]="task.done"
+          (change)="updateTaskStatus(task.id, !task.done)" class="task-checkbox" />
+        <label [for]="'checkbox' + task.id" class="task-label">
+          {{ task.description }}
+        </label>
+      </li>
+    </ul>
+    <p *ngIf="filteredTasks.length === 0" class="no-tasks">
+      No tasks found yet!
+    </p>
+  </div>
 </div>
