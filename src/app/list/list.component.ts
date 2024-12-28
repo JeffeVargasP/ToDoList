@@ -1,42 +1,37 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { faCheck, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faTrash, faXmark, faEllipsis } from '@fortawesome/free-solid-svg-icons';
+import { TaskService } from '../task.service';
+
 @Component({
   selector: 'app-list',
+  standalone: true,
   imports: [CommonModule, FontAwesomeModule],
   templateUrl: './list.component.html',
-  styleUrl: './list.component.scss'
+  styleUrls: ['./list.component.scss']
 })
-export class ListComponent implements OnInit {
-
-  tasks: { task: string, status: boolean }[] = [];
+export class ListComponent {
   faTrash = faTrash;
   faCheck = faCheck;
   faXMark = faXmark;
-
-  ngOnInit(): void {
-    this.loadTasks();
-  }
-
-  loadTasks(): void {
-    const storedTasks = localStorage.getItem('tasks');
-    this.tasks = storedTasks ? JSON.parse(storedTasks) : [];
+  faEllipsis = faEllipsis;
+  dropdownOpen: number | null = null;
+  tasks$;
+  
+  constructor(private taskService: TaskService) {
+    this.tasks$ = this.taskService.tasks$;
   }
 
   toggleStatus(index: number): void {
-    this.tasks[index].status = !this.tasks[index].status;
-    localStorage.setItem('tasks', JSON.stringify(this.tasks));
+    this.taskService.toggleTaskStatus(index);
+  }
+
+  toggleDropdown(index: number): void {
+    this.dropdownOpen = this.dropdownOpen === index ? null : index;
   }
 
   deleteTask(index: number): void {
-    this.tasks.splice(index, 1);
-    localStorage.setItem('tasks', JSON.stringify(this.tasks));
+    this.taskService.deleteTask(index);
   }
-
-  saveTask(task: string): void {
-    this.tasks.push({ task, status: false });
-    localStorage.setItem('tasks', JSON.stringify(this.tasks));
-  }
-
 }

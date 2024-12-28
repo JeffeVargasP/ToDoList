@@ -1,48 +1,71 @@
-<div class="w-full max-w-4xl mx-auto mt-6">
-    <div *ngIf="tasks.length > 0; else noTasks">
-      <div class="bg-white shadow-md rounded-lg overflow-x-auto">
+<div class="w-full max-w-4xl mx-auto mt-4">
+  <div *ngIf="(tasks$ | async) as tasks; else noTasks">
+    <div class="bg-white shadow-lg rounded-lg overflow-hidden">
+      <div class="max-h-96 overflow-y-auto">
         <table class="min-w-full border-collapse">
           <thead>
-            <tr class="bg-slate-200 text-gray-700">
-              <th class="px-4 py-2 text-left font-medium">Task</th>
-              <th class="px-4 py-2 text-left font-medium">Status</th>
-              <th class="px-4 py-2 text-center font-medium">Actions</th>
+            <tr class="bg-gray-200 text-gray-700 uppercase tracking-wide">
+              <th class="px-6 py-3 text-left font-semibold text-sm">Task</th>
+              <th class="px-6 py-3 text-left font-semibold text-sm">Status</th>
+              <th class="px-6 py-3 text-center font-semibold text-sm">Actions</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let task of tasks; let i = index" class="border-t border-gray-300 hover:bg-gray-100">
-              <td class="px-4 py-2 text-gray-700">{{ task.task }}</td>
-              <td class="px-4 py-2">
-                <span [ngClass]="task.status ? 'text-green-500' : 'text-yellow-500'">
+            <tr
+              *ngFor="let task of tasks; let i = index"
+              class="border-b border-gray-300 hover:bg-gray-100 relative"
+            >
+              <td class="px-6 py-4 text-gray-800 font-medium">{{ task.task }}</td>
+              <td class="px-6 py-4">
+                <span 
+                  class="text-sm font-medium px-2 py-1 rounded"
+                  [ngClass]="{
+                    'bg-green-100 text-green-700': task.status,
+                    'bg-yellow-100 text-yellow-700': !task.status
+                  }"
+                >
                   {{ task.status ? 'Completed' : 'Pending' }}
                 </span>
               </td>
-              <td class="px-4 py-2 text-center">
-                <!-- Botão para alternar o status -->
-                <button
-                  class="bg-green-500 hover:bg-green-700 text-white font-medium py-1 px-3 rounded transition-colors" [ngClass]="{'bg-yellow-500 hover:bg-yellow-700': task.status}"
-                  (click)="toggleStatus(i)"
-                >
-                  <fa-icon [icon]="task.status ? faXMark: faCheck"></fa-icon>
-                </button>
-                <!-- Botão para excluir a tarefa -->
-                <button
-                  class="bg-red-500 hover:bg-red-700 text-white font-medium py-1 px-3 rounded transition-colors ml-2"
-                  (click)="deleteTask(i)"
-                >
-                  <fa-icon [icon]="faTrash"></fa-icon>
-                </button>
+              <td class="px-6 py-4 text-center space-x-2">
+                <div class="relative inline-block text-left">
+                  <button
+                    class="p-2 rounded-full bg-transparent text-black hover:bg-slate-200 transition"
+                    (click)="toggleDropdown(i)"
+                  >
+                    <fa-icon [icon]="faEllipsis"></fa-icon>
+                  </button>
+                  <div
+                    *ngIf="dropdownOpen === i"
+                    class="absolute right-0 mt-2 w-32 bg-white border border-gray-300 rounded-md shadow-lg z-50"
+                  >
+                    <button
+                      class="block w-full text-left px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"
+                      (click)="toggleStatus(i)"
+                    >
+                      <fa-icon [icon]="task.status ? faXMark : faCheck" class="mr-2"></fa-icon>
+                      {{ task.status ? 'Mark as Pending' : 'Mark as Completed' }}
+                    </button>
+                    <button
+                      class="block w-full text-left px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"
+                      (click)="deleteTask(i)"
+                    >
+                      <fa-icon [icon]="faTrash" class="mr-2"></fa-icon>
+                      Delete Task
+                    </button>
+                  </div>
+                </div>
               </td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
-  
-    <ng-template #noTasks>
-      <div class="bg-white shadow-md rounded-lg p-4 text-center">
-        <p class="text-gray-700 text-lg font-medium">No tasks available at the moment.</p>
-      </div>
-    </ng-template>
   </div>
-  
+
+  <ng-template #noTasks>
+    <div class="bg-gray-50 shadow-md rounded-lg p-6 text-center">
+      <p class="text-gray-600 text-lg font-medium">No tasks available at the moment.</p>
+    </div>
+  </ng-template>
+</div>

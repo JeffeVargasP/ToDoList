@@ -20,7 +20,10 @@
     "@angular/router": "^19.0.0",
     "@fortawesome/angular-fontawesome": "^1.0.0",
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
+    "@ngrx/effects": "^19.0.0",
+    "@ngrx/store": "^19.0.0",
     "rxjs": "~7.8.0",
+    "tailwindcss-scrollbar": "^0.1.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
   },
