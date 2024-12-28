@@ -2,16 +2,20 @@
     <h1 class="text-4xl font-semibold flex flex-row justify-center items-center text-gray-800">To-Do List ✍</h1>
     <form class=" mt-4 flex flex-col justify-center items-center w-4/5 md:w-full" [formGroup]="taskForm"
         (ngSubmit)="onSubmit()">
-        <div class="input-group flex flex-row bg-white p-3 rounded-lg">
-            <input type="text" class="bg-transparent border-none focus:outline-none w-80" placeholder="Add a new task"
+        <div class="input-group flex flex-col sm:flex-row bg-white p-3 rounded-lg w-full">
+            <input type="text" class="bg-transparent border-none focus:outline-none w-full" placeholder="Add a new task"
                 formControlName="task">
-            <button class="bg-green-500 hover:bg-green-700 transition-colors text-white px-4 py-2 rounded-lg ml-2"
-                type="submit" [disabled]="!taskForm.valid" [ngClass]="{'disabled': !taskForm.valid}">Add</button>
+            <button
+                class="bg-green-500 hover:bg-green-700 transition-colors text-white px-4 py-2 rounded-lg mt-2 sm:mt-0 sm:ml-2"
+                type="submit" [disabled]="!taskForm.valid">
+                Add
+            </button>
         </div>
         <span class="warning text-red-500 mt-2"
             *ngIf="taskForm.get('task')?.touched && taskForm.get('task')?.hasError('required')">Task is required!
         </span>
-        <span class="warning text-red-500 mt-2" *ngIf="taskForm.get('task')?.touched && taskForm.get('task')?.hasError('minlength')">
+        <span class="warning text-red-500 mt-2"
+            *ngIf="taskForm.get('task')?.touched && taskForm.get('task')?.hasError('minlength')">
             Task must be at least 3 characters long!
         </span>
     </form>
