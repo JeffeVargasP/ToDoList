@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { ListComponent } from "./list/list.component";
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,17 +11,27 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'To-Do List';
-  tasks = [];
+  tasks: { task: string | null; status: boolean }[] = [];
   taskForm = new FormGroup({
     task: new FormControl('', [Validators.required, Validators.minLength(3)])
   });
 
-  constructor(private fb: FormBuilder, private router: Router) { }
+  constructor(private fb: FormBuilder) { 
+    const storedTasks = localStorage.getItem('tasks');
+    this.tasks = storedTasks ? JSON.parse(storedTasks) : [];
+  }
 
   onSubmit() {
     if (this.taskForm.valid) {
-      let formValue = this.taskForm.getRawValue();
-      localStorage.setItem('tasks', JSON.stringify([...this.tasks, { task: formValue.task, status: false }]));
+      const formValue = this.taskForm.getRawValue();
+
+      const newTask = { task: formValue.task, status: false };
+      this.tasks.push(newTask);
+
+      localStorage.setItem('tasks', JSON.stringify(this.tasks));
+    
+      this.taskForm.reset();
+
       location.reload();
     }
   }
