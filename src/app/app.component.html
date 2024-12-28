@@ -1,0 +1,19 @@
+<div class="bg-slate-300 font-medium w-dvw h-dvh flex flex-col justify-center items-center">
+    <h1 class="text-4xl font-semibold flex flex-row justify-center items-center text-gray-800">To-Do List ✍</h1>
+    <form class=" mt-4 flex flex-col justify-center items-center" [formGroup]="taskForm"
+        (ngSubmit)="onSubmit()">
+        <div class="input-group flex flex-row bg-white p-3 rounded-lg">
+            <input type="text" class="bg-transparent border-none focus:outline-none w-80" placeholder="Add a new task"
+                formControlName="task">
+            <button class="bg-green-500 hover:bg-green-700 transition-colors text-white px-4 py-2 rounded-lg ml-2"
+                type="submit" [disabled]="taskForm.invalid" [ngClass]="{'disabled': taskForm}">Add</button>
+        </div>
+        <span class="warning text-red-500 mt-2"
+            *ngIf="taskForm.get('task')?.touched && taskForm.get('task')?.hasError('required')">Task is required!
+        </span>
+        <span class="warning text-red-500 mt-2" *ngIf="taskForm.get('task')?.touched && taskForm.get('task')?.hasError('minlength')">
+            Task must be at least 3 characters long!
+        </span>
+    </form>
+    <app-list></app-list>
+</div>
