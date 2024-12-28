@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ListComponent } from "./list/list.component";
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -16,12 +17,13 @@ export class AppComponent {
     task: new FormControl('', [Validators.required, Validators.minLength(3)])
   });
 
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private router: Router) { }
 
   onSubmit() {
     if (this.taskForm.valid) {
       let formValue = this.taskForm.getRawValue();
-      window.alert('Task added: ' + formValue.task);
+      localStorage.setItem('tasks', JSON.stringify([...this.tasks, { task: formValue.task, status: false }]));
+      location.reload();
     }
   }
 
