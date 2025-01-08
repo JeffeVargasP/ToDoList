@@ -17,6 +17,8 @@ export class ListComponent {
   faXMark = faXmark;
   faEllipsis = faEllipsis;
   dropdownOpen: number | null = null;
+  modalOpen = false;
+  index: number | null = null;
   tasks$;
   
   constructor(private taskService: TaskService) {
@@ -24,6 +26,7 @@ export class ListComponent {
   }
 
   toggleStatus(index: number): void {
+    this.dropdownOpen = null;
     this.taskService.toggleTaskStatus(index);
   }
 
@@ -32,6 +35,16 @@ export class ListComponent {
   }
 
   deleteTask(index: number): void {
-    this.taskService.deleteTask(index);
+    this.dropdownOpen = null;
+    this.modalOpen = true;
+    this.index = index;
   }
+
+  confirmDelete(): void {
+    this.dropdownOpen = null;
+    this.modalOpen = true;
+    this.taskService.deleteTask(this.index as number);
+    this.modalOpen = false;
+  }
+
 }
